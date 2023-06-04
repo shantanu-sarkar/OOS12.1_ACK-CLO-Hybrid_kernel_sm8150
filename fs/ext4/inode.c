@@ -3581,7 +3581,7 @@ retry:
 
 	if (ret == 0) {
 		iomap->type = IOMAP_HOLE;
-		iomap->addr = IOMAP_NULL_ADDR;
+		iomap->blkno = IOMAP_NULL_BLOCK;
 		iomap->length = (u64)map.m_len << blkbits;
 	} else {
 		if (map.m_flags & EXT4_MAP_MAPPED) {
@@ -3592,7 +3592,7 @@ retry:
 			WARN_ON_ONCE(1);
 			return -EIO;
 		}
-		iomap->addr = (u64)map.m_pblk << blkbits;
+		iomap->blkno = (sector_t)map.m_pblk << (blkbits - 9);
 		iomap->length = (u64)map.m_len << blkbits;
 	}
 
